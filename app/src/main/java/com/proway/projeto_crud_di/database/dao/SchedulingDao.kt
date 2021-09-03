@@ -8,7 +8,7 @@ import com.proway.projeto_crud_di.model.*
 interface SchedulingDao {
 
     @Transaction
-    @Query("Select * from Scheduling inner join Physician on physician.phy_id = physicianFK order by phy_name")
+    @Query("Select * from Scheduling s, Physician p where s.physicianFK = p.phy_id order by p.phy_name")
     fun fetch(): List<SchedulingPOJO>
 
     @Transaction
@@ -20,7 +20,7 @@ interface SchedulingDao {
     fun fetchByPhysician(name: String): List<SchedulingPOJO>
 
     @Transaction
-    @Query("Select * from Scheduling inner join Physician on physician.phy_id = physicianFK where physician.phy_id in (:ids)")
+    @Query("Select * from Scheduling inner join Physician on physician.phy_id = physicianFK where physician.specialityPk in (:ids)")
     fun fetchByPhysicianSpeciality(ids: List<Int>): List<SchedulingPOJO>
 
     @Transaction
