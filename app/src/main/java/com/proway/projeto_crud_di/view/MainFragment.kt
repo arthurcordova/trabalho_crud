@@ -1,4 +1,4 @@
-package com.proway.projeto_crud_di.ui.main
+package com.proway.projeto_crud_di.view
 
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.proway.projeto_crud_di.R
+import com.proway.projeto_crud_di.view_model.MainViewModel
 
 class MainFragment : Fragment() {
 

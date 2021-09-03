@@ -1,4 +1,4 @@
-package com.proway.projeto_crud_di.ui.main
+package com.proway.projeto_crud_di.view_model
 
 import androidx.lifecycle.ViewModel
 

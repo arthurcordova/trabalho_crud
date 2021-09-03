@@ -2,7 +2,7 @@ package com.proway.projeto_crud_di
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.proway.projeto_crud_di.ui.main.MainFragment
+import com.proway.projeto_crud_di.view.MainFragment
 
 class MainActivity : AppCompatActivity() {
 
