@@ -11,6 +11,7 @@ data class Scheduling(
     val physicianFK: Int
 )
 
+@DatabaseView
 data class SchedulingPOJO(
     @Embedded
     val scheduling: Scheduling,
@@ -25,5 +26,5 @@ data class SchedulingPOJO(
         parentColumn = "physicianFK",
         entityColumn = "phy_id"
     )
-    val physician: PhysicianPOJO
+    val physician: Physician
 )

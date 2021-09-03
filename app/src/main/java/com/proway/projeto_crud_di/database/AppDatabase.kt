@@ -1,14 +1,15 @@
 package com.proway.projeto_crud_di.database
 
 import android.content.Context
+import androidx.room.AutoMigration
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.proway.projeto_crud_di.database.dao.PatientDao
-import com.proway.projeto_crud_di.model.Patient
-import com.proway.projeto_crud_di.model.Physician
-import com.proway.projeto_crud_di.model.Scheduling
-import com.proway.projeto_crud_di.model.Speciality
+import com.proway.projeto_crud_di.database.dao.PhysicianDao
+import com.proway.projeto_crud_di.database.dao.SchedulingDao
+import com.proway.projeto_crud_di.database.dao.SpecialityDao
+import com.proway.projeto_crud_di.model.*
 
 /**
  * Classe abstrata para criar nosso database local
@@ -24,14 +25,18 @@ import com.proway.projeto_crud_di.model.Speciality
         Physician::class,
         Scheduling::class
     ],
-    version = 1
-)
+    version = 2,
+
+    )
 abstract class AppDatabase : RoomDatabase() {
 
     /**
      * funcao declarada para o Room implementar automaticamente nosso DAO
      */
     abstract fun getPatientDao(): PatientDao
+    abstract fun getSpecialityDao(): SpecialityDao
+    abstract fun getPhysicianDao(): PhysicianDao
+    abstract fun getSchedulingDao(): SchedulingDao
 
     companion object {
 
@@ -44,6 +49,7 @@ abstract class AppDatabase : RoomDatabase() {
                 AppDatabase::class.java,
                 "crud_di_app_db"
             )
+                .fallbackToDestructiveMigration()
                 .allowMainThreadQueries()
                 .build()
         }
