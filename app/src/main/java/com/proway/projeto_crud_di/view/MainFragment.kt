@@ -7,27 +7,47 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.proway.projeto_crud_di.R
+import com.proway.projeto_crud_di.databinding.ActivitySplashBinding
+import com.proway.projeto_crud_di.databinding.MainFragmentBinding
 import com.proway.projeto_crud_di.view_model.MainViewModel
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.*
 
-class MainFragment : Fragment() {
+@AndroidEntryPoint
+class MainFragment : Fragment(R.layout.main_fragment) {
 
     companion object {
         fun newInstance() = MainFragment()
     }
 
     private lateinit var viewModel: MainViewModel
+    private lateinit var binding: MainFragmentBinding
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        return inflater.inflate(R.layout.main_fragment, container, false)
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding = MainFragmentBinding.bind(view)
+        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
+
+        val numeroDeRegistrosPercorridos = CoroutineScope(Dispatchers.Main).async {
+            checkNames()
+        }
+        CoroutineScope(Dispatchers.Main).launch {
+            val registros = numeroDeRegistrosPercorridos.await()
+            binding.numTextView.text = "Número de nomes percorrido foi de: $registros"
+        }
+
+        viewModel.getRepositories()
+
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
-        // TODO: Use the ViewModel
+    suspend fun checkNames(): Int {
+        val listOfNames = listOf("Arthur", "Aline", "Joaquim", "Pedro")
+        listOfNames.forEach {
+            binding.message.text = it
+            delay(2000)
+        }
+        return listOfNames.size
     }
 
 }

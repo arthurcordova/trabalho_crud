@@ -30,6 +30,8 @@ class SplashActivity : AppCompatActivity() {
             waitSplashScreenTimer()
         }
 
+
+
         /**
          * Coroutine para escutar o retorno do retornoAsync, dentro dela conseguimos colocar
          * um await na variavel.
