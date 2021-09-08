@@ -29,15 +29,17 @@ class MainFragment : Fragment(R.layout.main_fragment) {
         binding = MainFragmentBinding.bind(view)
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
 
-        val numeroDeRegistrosPercorridos = CoroutineScope(Dispatchers.Main).async {
-            checkNames()
-        }
+
         CoroutineScope(Dispatchers.Main).launch {
+            val numeroDeRegistrosPercorridos = CoroutineScope(Dispatchers.Main).async {
+                checkNames()
+            }
             val registros = numeroDeRegistrosPercorridos.await()
             binding.numTextView.text = "Número de nomes percorrido foi de: $registros"
         }
 
         viewModel.getRepositories()
+        viewModel.getUsers()
 
     }
 
